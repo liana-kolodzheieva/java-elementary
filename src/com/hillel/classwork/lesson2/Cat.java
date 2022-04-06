@@ -31,7 +31,7 @@ public class Cat {
 
     @Override
     public String toString() {
-        return "cat:" + this.name + "," + this.age;
+        return "Cat:" + this.name + "," + this.age;
     }
 
 }
