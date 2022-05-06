@@ -19,6 +19,14 @@ public class Person {
         return password;
     }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     public Person(String firstName, String lastName, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
