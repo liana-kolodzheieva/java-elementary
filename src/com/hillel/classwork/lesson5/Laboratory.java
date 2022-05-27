@@ -26,10 +26,7 @@ public class Laboratory {
         }
         for (Plant plant : plants) {
             plant.photosyntosis();
-
-            Dandelion dandelion = (Dandelion) plant;
-
-
+            //Dandelion dandelion = (Dandelion) plant;
         }
     }
 
