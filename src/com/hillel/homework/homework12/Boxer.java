@@ -3,8 +3,8 @@ package com.hillel.homework.homework12;
 public class Boxer extends BodyGuard{
     public Gun gun;
 
-    public Boxer(Gun gun) {
-        this.gun = gun;
+    public Boxer() {
+        this.gun = new  Gun();
     }
 
     @Override

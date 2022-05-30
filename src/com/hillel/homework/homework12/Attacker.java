@@ -7,7 +7,7 @@ public class Attacker {
         return hasGun;
     }
 
-    public Attacker(boolean b) {
+    public Attacker(boolean hasGun) {
         this.hasGun = hasGun;
     }
 }

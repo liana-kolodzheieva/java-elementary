@@ -1,7 +1,8 @@
 package com.hillel.homework.homework12;
 
 public abstract class BodyGuard {
-    Gun gun;
+    Gun gun = new Gun();
+
     abstract void applyMartialArts(Attacker attacker);
 
     void shoot(Attacker attacker) {
