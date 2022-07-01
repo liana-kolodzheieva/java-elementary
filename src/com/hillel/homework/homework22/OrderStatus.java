@@ -1,6 +1,6 @@
 package com.hillel.homework.homework22;
 
-public enum Status {
+public enum OrderStatus {
     NEW,
     IN_PROGRESS,
     FINISHED,

@@ -7,7 +7,7 @@ import java.util.*;
 
 public class OrderHistory {
     public static BufferedReader READER = new BufferedReader(new InputStreamReader(System.in));
-    public static String FILE_NAME = "C:\\Users\\liana\\IdeaProjects\\java-elementary\\src\\com\\hillel\\homework\\homework22\\readMe.txt";
+    public static String FILE_NAME = "C:\\Users\\User\\Downloads\\readMe.txt";
     public static List<Order> ORDER_LIST = new ArrayList<>();
 
 
@@ -33,7 +33,7 @@ public class OrderHistory {
         }
         boolean found = false;
         for (Order order : ORDER_LIST) {
-            if (number == order.getNumber()) {
+            if (number == order.getOrderNumber()) {
                 orderChange(order);
                 found = true;
             }
@@ -43,7 +43,7 @@ public class OrderHistory {
 
     private static void orderCreate(int number) {
         System.out.println("New order number is " + number);
-        Order order = new Order(number);
+        Order order = new Order(OrderStatus.NEW, number, LocalDateTime.now());
         ORDER_LIST.add(order);
         writeToFile(order.toString());
     }
@@ -52,17 +52,17 @@ public class OrderHistory {
     orderChange(Order order) {
 
         try {
-            if (order.getStatus().ordinal() == Status.FAILED.ordinal())
+            if (order.getOrderStatus().ordinal() == OrderStatus.FAILED.ordinal())
                 throw new InvalidStatusException("You can't change status FAILED");
-            System.out.println("Order status:" + order.getStatus() + ". Enter new status " +
+            System.out.println("Order status:" + order.getOrderStatus() + ". Enter new status " +
                     "\n [NEW, IN_PROGRESS, FINISHED, FAILED");
-          Status newStatus = Status.valueOf(READER.readLine().toUpperCase(Locale.ROOT).replaceAll(" ", ""));
-            if ((order.getStatus().ordinal() == newStatus.ordinal()))
+            OrderStatus newStatus = OrderStatus.valueOf(READER.readLine().toUpperCase(Locale.ROOT).replaceAll(" ", ""));
+            if ((order.getOrderStatus().ordinal() == newStatus.ordinal()))
                 throw new InvalidStatusException("Old status is the same as the new one");
-            if ((order.getStatus().ordinal() > newStatus.ordinal()))
+            if ((order.getOrderStatus().ordinal() > newStatus.ordinal()))
                 throw new InvalidStatusException("Old status is upper than new one");
-            order.setStatus(newStatus);
-            order.setUpdatedAt(LocalDateTime.now());
+            order.setOrderStatus(newStatus);
+            order.setOrderChanged(LocalDateTime.now());
             writeToFile(order.toString());
         } catch (InvalidStatusException e) {
             System.out.println(e.getMessage());
@@ -95,17 +95,17 @@ public class OrderHistory {
     private static void toOrder(String readLine) {
         if (readLine == null) return;
         readLine = readLine.replaceAll("Order:status=", " ").replaceAll(", number=", " ")
-                .replaceAll(", createdAt", " ").replaceAll(", uptadedAt=", " ");
+                .replaceAll(", accepted=", " ").replaceAll(", changed=", " ");
         String[] str = readLine.split(" ");
-        System.out.println(str);
+
         for (Order order : ORDER_LIST) {
-            if (Integer.parseInt(str[2]) == order.getNumber()) {
-                order.setStatus(Status.valueOf(str[1].toUpperCase()));
-                order.setUpdatedAt(LocalDateTime.parse(str[4]));
+            if (Integer.parseInt(str[2]) == order.getOrderNumber()) {
+                order.setOrderStatus(OrderStatus.valueOf(str[1].toUpperCase()));
+                order.setOrderChanged(LocalDateTime.parse(str[4]));
                 return;
             }
         }
-        ORDER_LIST.add(new Order(Status.valueOf(str[1].toLowerCase()),Long.parseLong(str[2]),
-                LocalDateTime.parse(str[3]), LocalDateTime.parse(str[4])));
+        ORDER_LIST.add(new Order(OrderStatus.valueOf(str[1].toUpperCase()), Integer.parseInt(str[2]),
+                LocalDateTime.parse(str[3])));
     }
 }

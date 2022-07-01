@@ -1,66 +1,72 @@
 package com.hillel.homework.homework22;
 
 import java.time.LocalDateTime;
-
-import static com.hillel.homework.homework22.Status.NEW;
+import java.util.Objects;
 
 public class Order {
-    private Status status;
-    private long number;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
 
-    public Order(long number) {
-        this.number = number;
-        this.createdAt = LocalDateTime.now();
-        this.status = NEW;
-        this.updatedAt = LocalDateTime.now();
+    private OrderStatus orderStatus;
+    private int orderNumber;
+    private LocalDateTime orderAccepted;
+    private LocalDateTime orderChanged;
+
+    public Order(OrderStatus orderStatus, int orderNumber, LocalDateTime orderAccepted) {
+        this.orderStatus = orderStatus;
+        this.orderNumber = orderNumber;
+        this.orderAccepted = orderAccepted;
     }
-
-    public Order(Status status, long number, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.status = status;
-        this.number = number;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
-
-
 
     @Override
     public String toString() {
-        return "Order{" +
-                "status=" + status +
-                ", number=" + number +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                '}';
+        return "Order:" +
+                "status=" + orderStatus +
+                ", number=" + orderNumber +
+                ", accepted=" + orderAccepted +
+                ", changed=" + orderChanged + "\n";
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Order order = (Order) o;
+        return orderNumber == order.orderNumber && orderStatus == order.orderStatus && Objects.equals(orderAccepted, order.orderAccepted) && Objects.equals(orderChanged, order.orderChanged);
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+    @Override
+    public int hashCode() {
+        return Objects.hash(orderStatus, orderNumber, orderAccepted, orderChanged);
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
     }
 
-    public Status getStatus() {
-        return status;
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
     }
 
-    public long getNumber() {
-        return number;
+    public int getOrderNumber() {
+        return orderNumber;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
+    public void setOrderNumber(int orderNumber) {
+        this.orderNumber = orderNumber;
     }
 
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
+    public LocalDateTime getOrderAccepted() {
+        return orderAccepted;
+    }
+
+    public void setOrderAccepted(LocalDateTime orderAccepted) {
+        this.orderAccepted = orderAccepted;
+    }
+
+    public LocalDateTime getOrderChanged() {
+        return orderChanged;
+    }
+
+    public void setOrderChanged(LocalDateTime orderChanged) {
+        this.orderChanged = orderChanged;
     }
 }
